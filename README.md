@@ -32,7 +32,7 @@ No redirecting back to the Youtube tab for the next song and most importantly NO
 
 ### How to use the YT audio player
 * If you succeed to install the extension, you will see this page. <br>
-![demo](https://github.com/isabeltiongsk/youtubeAudioPlaylist.mz-extension/blob/master/demo.JPG) <br> <br>
+![demo]https://github.com/isabeltiongsk/youtubeAudioPlaylist.mz-extension/blob/master/demo/demo.JPG) <br> <br>
 * In the input field, just paste your youtube id. <br> 
 ![demo](https://github.com/isabeltiongsk/youtubeAudioPlaylist.mz-extension/blob/master/demo/demo-1.JPG) <br> <br>
 * The id is the value behind the 'v=' of the youtube url. <br>

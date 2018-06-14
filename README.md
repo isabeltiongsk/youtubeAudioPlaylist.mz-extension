@@ -55,8 +55,10 @@ Check if you are using any **Ad blocker extension** on your browser. If you do, 
 
 If there is still an error, check whether your using a firefox browser that is above version 58. <br>
 
-That should be it for solving the error.
+That should be it for solving the error.<br>
 
+### Other error that might happen: Audio is not playing the next song
+This might happened when the cookies in your browser interrupted the API, clear your browser cookies and restart the browser again and that shall work.<br>
 ## Code References
 
 The source code I referred for this feature is from [Jemillol](https://github.com/JemiloII/Youtube-Audio-Player) for his audio player's css files. 

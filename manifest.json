@@ -1,0 +1,23 @@
+{
+
+  "description": "Youtube Audio Playlist",
+  "manifest_version": 2,
+  "name": "Youtube Audio Playlist",
+  "version": "1",
+
+  "icons": {
+    "64": "icons/music.png"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "icons/music.png",
+    "default_title": "Youtube Audio Playlist",
+    "default_popup": "index.html"
+  },
+  "permissions": ["storage"]
+
+}

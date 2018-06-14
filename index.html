@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="js/jquery-1.9.1.js"></script>
+    <script src="js/jquery-ui-1.10.3.custom.js"></script>
+    <link href="css/dot-luv/jquery-ui-1.10.3.custom.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    
+    <div id="player"></div>
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '0',
+          width: '0',
+          videoId: document.getElementById('youtubeid').value,
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          var state = player.getPlayerState();
+          done = true;
+        }
+        if(state == 1){
+          var current_volume = player.getVolume();
+          // Volume Slider
+          $(function() {
+            $( "#slider_vertical" ).slider({
+              orientation: "vertical",
+              range: "min",
+              min: 0,
+              max: 100,
+              value: 50,
+              slide: function( event, ui ) {
+                $( "#volume" ).val( ui.value );
+                player.setVolume(ui.value);
+              }
+            });
+          });
+          $('#slider_vertical').find(".ui-slider-range").css('height', current_volume+'%');
+          // call the function every 250 milisecond.
+          setInterval(displTime,250);  // PUT THIS STATEMENT JUST AFTER THE PLAYER HAS BEEN CREATED. 
+        }
+        if (event.data == YT.PlayerState.ENDED) {   // Played next video when first ended
+           player.loadVideoById ({videoId: document.getElementById('youtubeid2').value});
+           if (event.data == YT.PlayerState.ENDED) {   // Played next video when second ended
+           player.loadVideoById ({videoId: document.getElementById('youtubeid3').value});
+        if (event.data == YT.PlayerState.ENDED) {   // Played next video when third ended
+           player.loadVideoById ({videoId: document.getElementById('youtubeid4').value});
+        if (event.data == YT.PlayerState.ENDED) {   // Played next video when forth ended
+           player.loadVideoById ({videoId: document.getElementById('youtubeid5').value});
+        }}}   
+        }  
+      }
+
+      
+      function displTime() {
+        
+        var mind = player.getCurrentTime();   // returns elapsed time in seconds 
+        var m = Math.floor(mind / 60);
+        var secd = mind % 60;
+        var s = Math.ceil(secd)
+
+        var dur = player.getDuration();       // returns duration time in seconds
+
+        var dm = Math.floor(dur / 60);
+        var dsecd = dur % 60;
+        var ds = Math.ceil(dsecd)
+
+        var playbackPercent = mind/dur;
+        var sliderValue = playbackPercent * 100;
+        var state = player.getPlayerState();
+
+        var getVolume = player.getVolume();
+
+        $("#time").html("Current: " + m + ":" + n(s) + " | Duration: " + dm + ":" + n(ds) + " | PlayerState: " + state + " | Volume: " + getVolume + " | Slider Value: " + sliderValue);  // Using the JQUERY library to write to body
+        $( "#slider_timeline" ).slider({ 
+          range: "min",
+          min:0,
+          value: sliderValue });
+        
+        
+        // adds a 0 to the seconds when the time is less than 9 seconds
+        function n(n){
+          return n > 9 ? "" + n: "0" + n;
+        }
+
+        // set player value
+        if(state == 1){
+          $("#player_control_button").removeClass('ui-icon-play').addClass('ui-icon-pause').click(function(){player.pauseVideo();});
+        }else if(state == 2){
+          $("#player_control_button").removeClass('ui-icon-pause').addClass('ui-icon-play').click(function(){player.playVideo();});
+        }else if(state == 0){
+          $("#player_control_button").removeClass('ui-icon-pause').addClass('ui-icon-arrowrefresh-1-e').click(function(){player.playVideo();});
+        }else{
+          var donothing;
+        }
+
+        // set play mute icons
+        if(getVolume != 0){
+          $('#player_mute_button').removeClass('ui-icon-volume-off').addClass('ui-icon-volume-on').click(function(){player.mute();});
+        }else{
+          $('#player_mute_button').removeClass('ui-icon-volume-on').addClass('ui-icon-volume-off').click(function(){player.unMute();});
+        }
+      }
+      
+      
+      
+    </script>
+
+    <label class="control-label col-sm-2" for="text">Youtube:</label><br/>
+      <input type="text" class="form-control" id="youtubeid" placeholder="Enter youtube id" name="youtubeid" size="40"><br/>
+      <input type="text" class="form-control" id="youtubeid2" placeholder="Enter second youtube id" name="youtubeid2" size="40"><br/>
+      <input type="text" class="form-control" id="youtubeid3" placeholder="Enter third youtube id" name="youtubeid3" size="40"><br/>
+      <input type="text" class="form-control" id="youtubeid4" placeholder="Enter forth youtube id" name="youtubeid4" size="40"><br/>
+      <input type="text" class="form-control" id="youtubeid5" placeholder="Enter fifth youtube id" name="youtubeid5" size="40"><br/>
+
+<input type="button" class="btn btn-primary" value="Start Playlist" onClick="window.location.reload()">
+
+  <ul id="icons" class="ui-widget ui-helper-clearfix">
+	  <li class="ui-state-default ui-corner-all"><span id="player_control_button" class="ui-icon ui-icon-play"></span></li>
+    <li class="ui-state-default ui-corner-all"><span id="player_mute_button" class="ui-icon ui-icon-volume-on"></span></li>
+  </ul>
+
+  <a href="javascript:void(0);" onclick="player.mute();">Mute</a> | <a href="javascript:void(0);" onclick="player.unMute();">Unmute</a> | <input id="volume" type="text" size="2" onload="player.setVolume(document.getElementById('volume').value)" onchange="player.setVolume(document.getElementById('volume').value)">
+
+
+
+  <div id="slider_vertical" style="height:50px;" onload="player.setVolume(document.getElementById('volume').value)" onchange="player.setVolume(document.getElementById('volume').value)"></div><br />
+
+
+
+  <div id="slider_timeline" style="width:400px;"></div> 
+  <div id="time"></div>
+
+
+  <script>
+    
+  </script>
+</body>
+</html>

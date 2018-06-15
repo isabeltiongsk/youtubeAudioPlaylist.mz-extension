@@ -55,7 +55,8 @@ Check if you are using any **Ad blocker extension** on your browser. If you do, 
 
 If there is still an error, check whether your using a firefox browser that is above version 58. <br>
 
-That should be it for solving the error.<br>
+That should be it for solving the error.<br><br>
+Please take note that it may take around 10 seconds for the system to load the playlist
 
 ### Other error that might happen: Audio is not playing the next song
 This might happened when the cookies in your browser interrupted the API, clear your browser cookies and restart the browser again and that shall work.<br>
